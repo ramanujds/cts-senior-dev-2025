@@ -1,18 +1,23 @@
 package com.cts.streams;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamBasics {
 
     public static void main(String[] args) {
 
-        List<String> names= List.of("phone","laptop","watch","camera");
+        var value = 10;
 
-        names.stream()
-                .filter(e->e.length()==6)
+        var names = List.of("phone", "laptop", "watch", "camera");
+
+        var updatedList = names.stream()
+                .filter(e -> e.length() == 6)
                 .map(String::toUpperCase)
-                .forEach(System.out::println);
+                .toList();
+
+        System.out.println(updatedList);
 
     }
 
