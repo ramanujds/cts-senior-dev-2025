@@ -5,16 +5,17 @@ import com.cts.model.Task;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class StreamTodos {
 
     public static void main(String[] args) {
 
-        Task t1 = new Task(1, "Complete Java Assignment", 5, "Completed");
-        Task t2 = new Task(2, "Read Java Book", 3, "In Progress");
-        Task t3 = new Task(3, "Write Unit Tests", 4, "Not Started");
-        Task t4 = new Task(4, "Fix Bugs", 3, "In Progress");
-        Task t5 = new Task(5, "Deploy Application", 1, "Not Started");
+        Task t1 = new Task(1, "Complete Java Assignment", 5, "Completed", List.of("Harsh", "Karan"));
+        Task t2 = new Task(2, "Read about Java Streams", 4, "Pending", List.of("Harsh"));
+        Task t3 = new Task(3, "Practice coding questions", 4, "Pending", List.of("Javed"));
+        Task t4 = new Task(4, "Watch a movie", 1, "Pending", List.of("Suraj", "Karan"));
+        Task t5 = new Task(5, "Go for a walk", 2, "Completed", List.of("Amit"));
 
         List<Task> tasks = List.of(t1, t2, t3, t4, t5);
 
@@ -28,13 +29,13 @@ public class StreamTodos {
 
         var list = tasks.stream().map(t -> t.getTitle()).toList();
 
-        System.out.println(list);
+//        System.out.println(list);
 
         // Find all the tasks with priority > 3
 
         var filteredTasks = tasks.stream().filter(t -> t.getPriority() >= 3).toList();
 
-        System.out.println(filteredTasks);
+//        System.out.println(filteredTasks);
 
         // Sort tasks based on priority descending and title ascending
 
@@ -47,19 +48,38 @@ public class StreamTodos {
 
         var sortedTask = tasks.stream().
                 sorted(Comparator.comparing(Task::getPriority).reversed()
-                        .thenComparing(t->t.getTitle()))
+                        .thenComparing(t -> t.getTitle()))
                 .toList();
 
-        System.out.println("After sorting");
-        sortedTask.forEach(System.out::println);
+//        System.out.println("After sorting");
+//        sortedTask.forEach(System.out::println);
 
         // Update all the tasks from Pending to Completed.
 
-        var updatedTasks = tasks.stream().peek(t->t.setStatus("Completed")).toList();
+        var updatedTasks = tasks.stream().peek(t -> t.setStatus("Completed")).toList();
 
-        System.out.println("After completing");
+//        System.out.println("After completing");
+//
+//        updatedTasks.forEach(System.out::println);
 
-        updatedTasks.forEach(System.out::println);
+        var users = tasks.stream().flatMap(t -> t.getUsers().stream())
+                .distinct()
+                .toList();
+
+//        users.forEach(System.out::println);
+
+        // Group by priority
+
+        var groupByPriority = tasks.stream()
+                .collect(Collectors.groupingBy(t->t.getPriority()));
+
+
+        groupByPriority.forEach((k,v)-> {
+            System.out.println("Priority : "+k);
+            v.forEach(t-> System.out.println(t.getTitle()));
+            System.out.println();
+        });
+
 
 
     }

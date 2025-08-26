@@ -11,3 +11,7 @@
 4. Sort tasks based on priority descending and title ascending
 
 5. Update all the tasks from Pending to Completed.
+
+6. Show all the users
+
+7. Grouping on Priority
