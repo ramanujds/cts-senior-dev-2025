@@ -2,9 +2,7 @@ package com.cts.streams;
 
 import com.cts.model.Task;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StreamTodos {
@@ -23,7 +21,7 @@ public class StreamTodos {
         // Find the task with max priority
         var task = tasks.stream().max((x, y) -> x.getPriority() - y.getPriority()).get();
 
-        System.out.println(task);
+//        System.out.println(task);
 
         // Get a List containing only titles
 
@@ -71,15 +69,64 @@ public class StreamTodos {
         // Group by priority
 
         var groupByPriority = tasks.stream()
-                .collect(Collectors.groupingBy(t->t.getPriority()));
+                .collect(Collectors.groupingBy(t -> t.getPriority()));
 
 
-        groupByPriority.forEach((k,v)-> {
-            System.out.println("Priority : "+k);
-            v.forEach(t-> System.out.println(t.getTitle()));
+//        groupByPriority.forEach((k,v)-> {
+//            System.out.println("Priority : "+k);
+//            v.forEach(t-> System.out.println(t.getTitle()));
+//            System.out.println();
+//        });
+
+        var karanTasks = tasks.stream().filter(t -> t.getUsers().contains("Karan")).toList();
+
+        //     karanTasks.forEach(t-> System.out.println(t+" - "+t.getUsers()));
+
+
+        // Grouping by user
+
+//        var groupByUser = tasks.stream()
+//                .collect(
+//                        Collectors.groupingBy(
+//                                t->t.getUsers(),
+//                                Collectors.flatMapping(
+//                                        t->t.getUsers().stream(),
+//                                        Collectors.toList()
+//                                )
+//
+//                        )
+//                );
+
+
+        Map<String, List<Task>> usersMap = new HashMap<>();
+
+        tasks.stream()
+                .flatMap(t -> t.getUsers().stream()
+                        .peek(u -> {
+                            var current = usersMap.getOrDefault(u, new ArrayList<Task>());
+                            current.add(t);
+                            usersMap.put(u, current);
+                            System.out.println(current);
+                        }))
+                .collect(Collectors.toList())
+        ;
+
+        var output = tasks.stream()
+                .flatMap(t -> t.getUsers().stream()
+                        .map(u -> new AbstractMap.SimpleEntry<>(u, t)))
+                .collect(
+                        Collectors.groupingBy(
+                                m -> m.getKey(),
+                                Collectors.mapping(m -> m.getValue(), Collectors.toList())
+                        )
+                );
+
+
+        output.forEach((k, v) -> {
+            System.out.println("User : " + k);
+            v.forEach(t -> System.out.println(t));
             System.out.println();
         });
-
 
 
     }

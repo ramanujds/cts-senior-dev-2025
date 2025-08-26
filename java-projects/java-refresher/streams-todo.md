@@ -15,3 +15,8 @@
 6. Show all the users
 
 7. Grouping on Priority
+
+8. Filtering all the tasks Karan is doing
+
+9. Grouping by user
+
