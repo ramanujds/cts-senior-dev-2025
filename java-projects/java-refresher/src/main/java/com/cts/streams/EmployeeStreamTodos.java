@@ -62,6 +62,16 @@ public class EmployeeStreamTodos {
         // Employees from Bengaluru, sorted by names
 
 
+        // Second Highest Paid employee
+
+        var emp = employees.stream().max(Comparator.comparing(Employee::salary)).get();
+
+        var output = employees.stream().filter(e->!e.equals(emp))
+                .max(Comparator.comparing(Employee::salary)).get();
+
+        System.out.println(output);
+
+
 
 
         // Average salary for each dept
@@ -70,7 +80,7 @@ public class EmployeeStreamTodos {
                 Collectors.groupingBy(Employee::department, Collectors.averagingDouble(Employee::salary))
         );
 
-        System.out.println(avgSalaryPerDept);
+//        System.out.println(avgSalaryPerDept);
 
     }
 }

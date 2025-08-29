@@ -1,6 +1,7 @@
 package com.cts.parallelstreams;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -12,6 +13,8 @@ public class ParallelStreamsBasics {
 
         List<Integer> nums = IntStream.rangeClosed(1,100000)
                             .boxed().toList();
+        nums.getLast();
+
 
         // Sequential
         var start = System.currentTimeMillis();
