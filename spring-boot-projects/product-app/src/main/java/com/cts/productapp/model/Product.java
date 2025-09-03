@@ -1,5 +1,7 @@
 package com.cts.productapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,5 +16,9 @@ public class Product {
     private String name;
     private String description;
     private double price;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Supplier supplier;
 
 }

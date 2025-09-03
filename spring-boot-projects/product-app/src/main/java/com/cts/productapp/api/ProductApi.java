@@ -68,6 +68,10 @@ public class ProductApi {
             productToUpdate.setPrice(product.getPrice());
         }
 
+        if (product.getSupplier()!=null){
+            productToUpdate.setSupplier(product.getSupplier());
+        }
+
         return productRepo.save(productToUpdate);
     }
 
