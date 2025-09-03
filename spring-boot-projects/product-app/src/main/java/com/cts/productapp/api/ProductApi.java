@@ -71,4 +71,9 @@ public class ProductApi {
         return productRepo.save(productToUpdate);
     }
 
+    @GetMapping("/search")
+    public Product searchProduct(@RequestParam("name") String name, @RequestParam("price") double price){
+       return productRepo.findByNameIgnoreCase(name).orElseThrow(()->new RecordNotFoundException("Product with name "+name+ " not found"));
+    }
+
 }
