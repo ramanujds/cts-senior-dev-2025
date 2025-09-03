@@ -17,7 +17,7 @@ public class Product {
     private String description;
     private double price;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
     private Supplier supplier;
 
