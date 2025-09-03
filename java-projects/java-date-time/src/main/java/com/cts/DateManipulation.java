@@ -15,9 +15,9 @@ public class DateManipulation {
         LocalDate date = LocalDate.parse("05/03/1992",
                 DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        var difference = ChronoUnit.DAYS.between(date,today);
+//        var difference = ChronoUnit.DAYS.between(date,today);
 
-        System.out.println(difference);
+//        System.out.println(difference);
 
         System.out.println(date.isLeapYear());
 
