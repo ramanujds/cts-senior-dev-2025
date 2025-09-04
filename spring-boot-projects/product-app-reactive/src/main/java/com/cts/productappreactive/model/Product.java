@@ -1,17 +1,16 @@
 package com.cts.productappreactive.model;
 
 
-import jakarta.persistence.*;
-import lombok.Data;
 
-@Entity
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+
 @Data
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(length = 100)
     private String name;
     private String description;
     private double price;

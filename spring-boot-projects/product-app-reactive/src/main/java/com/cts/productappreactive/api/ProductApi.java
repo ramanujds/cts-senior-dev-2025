@@ -1,18 +1,23 @@
 package com.cts.productappreactive.api;
 
 import com.cts.productappreactive.model.Product;
-import com.cts.productappreactive.repository.ProductRepositoryImpl;
+import com.cts.productappreactive.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.awt.*;
+import java.time.Duration;
 
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductApi {
 
     @Autowired
-    private ProductRepositoryImpl productRepository;
+    private ProductRepository productRepository;
 
 
 
@@ -21,9 +26,9 @@ public class ProductApi {
         return productRepository.findById(id);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Product> getAllProducts(){
-        return productRepository.findAll();
+        return productRepository.findAll().delayElements(Duration.ofMillis(100));
     }
 
     @PostMapping
