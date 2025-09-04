@@ -3,6 +3,9 @@ package com.cts.productapp.api;
 import com.cts.productapp.exception.RecordNotFoundException;
 import com.cts.productapp.model.Product;
 import com.cts.productapp.repository.ProductRepository;
+import com.cts.productapp.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,16 +17,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
+@Tag(name = "Product API", description = "CRUD operations for Product")
 public class ProductApi {
 
     private ProductRepository productRepo;
+    private final ProductService productService;
 
-    public ProductApi(ProductRepository productRepo) {
+    public ProductApi(@Autowired(required = false) ProductRepository productRepo, ProductService productService) {
         this.productRepo = productRepo;
+        this.productService = productService;
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(summary = "Create a new Product", description = "Returns the created user back")
     public Product saveProduct(@RequestBody Product product){
         if(productRepo.existsById(product.getId())){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Product with id "+product.getId()+ " already exists");
@@ -39,9 +46,7 @@ public class ProductApi {
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable int id){
-        return productRepo.findById(id).orElseThrow(
-                ()->new RecordNotFoundException("Product with id "+id+ " not found")
-        );
+        return productService.getProductById(id);
     }
 
     @DeleteMapping("/{id}")
