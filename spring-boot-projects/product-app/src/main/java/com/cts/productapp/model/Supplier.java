@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,9 +19,9 @@ public class Supplier {
     private String name;
     private String location;
 
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    @JsonBackReference
-    Set<Product> products;
+    @OneToMany(mappedBy = "supplier")
+    @JsonManagedReference
+    List<Product> products = new ArrayList<>();
 
 
 }

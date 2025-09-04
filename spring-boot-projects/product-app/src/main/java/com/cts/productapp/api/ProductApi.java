@@ -3,6 +3,8 @@ package com.cts.productapp.api;
 import com.cts.productapp.exception.RecordNotFoundException;
 import com.cts.productapp.model.Product;
 import com.cts.productapp.repository.ProductRepository;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

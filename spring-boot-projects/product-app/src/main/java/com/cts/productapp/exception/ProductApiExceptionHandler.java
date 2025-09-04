@@ -3,6 +3,7 @@ package com.cts.productapp.exception;
 import com.cts.productapp.dto.ErrorResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -24,6 +25,12 @@ public class ProductApiExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(status).body(body);
     }
+
+//    @ExceptionHandler(RecordNotFoundException.class)
+//    public ProblemDetail handleRecordNotFoundException(RecordNotFoundException ex) {
+//        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,ex.getMessage());
+//        return errorDetail;
+//    }
 
 
 }
