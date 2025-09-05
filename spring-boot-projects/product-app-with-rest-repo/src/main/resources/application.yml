@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      username: ramanuj
+      password: password
+      host: localhost
+      database: product_db
+      port: 27017
+
+
