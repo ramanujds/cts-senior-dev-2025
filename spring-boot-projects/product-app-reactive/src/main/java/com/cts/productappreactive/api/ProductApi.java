@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.awt.*;
+import java.math.BigInteger;
 import java.time.Duration;
 
 @RestController
@@ -22,13 +23,13 @@ public class ProductApi {
 
 
     @GetMapping("/{id}")
-    public Mono<Product> getProduct(@PathVariable int id){
+    public Mono<Product> getProduct(@PathVariable BigInteger id){
         return productRepository.findById(id);
     }
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Product> getAllProducts(){
-        return productRepository.findAll().delayElements(Duration.ofMillis(100));
+        return productRepository.findAll().delayElements(Duration.ofMillis(1000));
     }
 
     @PostMapping
@@ -36,6 +37,19 @@ public class ProductApi {
         return product.flatMap(productRepository::save);
     }
 
+    @GetMapping("/search")
+    public Flux<Product> search(@RequestParam("name") String name){
+        if(name!=null) return productRepository.findByNameContainingIgnoreCase(name);
+
+        return productRepository.findAll();
+    }
+
+    @GetMapping("/search/price")
+    public Flux<Product> search(@RequestParam("min") double min, @RequestParam("max") double max){
+       if (min!=0 && max!=0)
+            return productRepository.findByPriceBetween(min,max);
+        return productRepository.findAll();
+    }
 
 
 }
