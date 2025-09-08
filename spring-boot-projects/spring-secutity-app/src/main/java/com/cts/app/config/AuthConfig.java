@@ -1,10 +1,12 @@
 package com.cts.app.config;
 
+import com.cts.app.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,10 +15,16 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class AuthConfig {
+    private final JwtAuthFilter jwtAuthFilter;
+
+    public AuthConfig(JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+    }
 
 //    @Bean
 //    public UserDetailsService getUserDetailsService() {
@@ -39,16 +47,19 @@ public class AuthConfig {
         return http.authorizeHttpRequests(
                         request -> request.requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers("/public/**","/auth/**").permitAll()
+                                .requestMatchers("/public/**", "/auth/**").permitAll()
                 )
-                .csrf(c->c.disable())
-                .httpBasic(Customizer.withDefaults())
+                .csrf(c -> c.disable())
+//                .formLogin(Customizer.withDefaults())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//                .httpBasic(Customizer.withDefaults())
                 .build();
 
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
