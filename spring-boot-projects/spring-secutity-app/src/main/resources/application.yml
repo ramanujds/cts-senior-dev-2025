@@ -10,3 +10,7 @@ spring:
     url: jdbc:mysql://localhost:3306/product_db
     username: root
     password: password
+
+auth:
+    jwtSecret: fsyfashvagsuygsqagjhabsmbqw231t67512736teuqbk32t3781
+    jwtExpirationMs: 300

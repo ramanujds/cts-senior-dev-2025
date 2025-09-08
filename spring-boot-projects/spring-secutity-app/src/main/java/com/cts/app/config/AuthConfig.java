@@ -39,7 +39,7 @@ public class AuthConfig {
         return http.authorizeHttpRequests(
                         request -> request.requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers("/public/**","/login","/signup").permitAll()
+                                .requestMatchers("/public/**","/auth/**").permitAll()
                 )
                 .csrf(c->c.disable())
                 .httpBasic(Customizer.withDefaults())
