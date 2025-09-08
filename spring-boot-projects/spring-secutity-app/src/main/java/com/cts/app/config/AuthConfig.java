@@ -41,6 +41,7 @@ public class AuthConfig {
                                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/public/**","/login","/signup").permitAll()
                 )
+                .csrf(c->c.disable())
                 .httpBasic(Customizer.withDefaults())
                 .build();
 

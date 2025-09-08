@@ -1,6 +1,7 @@
 package com.cts.app.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +17,7 @@ public class GreetController {
         return "Hello from Admin";
     }
 
-    @GetMapping("/users")
+    @PostMapping("/users")
     public String sayHelloUser(){
         return "Hello from User";
     }
