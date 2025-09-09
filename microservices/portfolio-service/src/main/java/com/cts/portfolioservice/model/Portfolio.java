@@ -14,7 +14,7 @@ public class Portfolio {
     @Id
     private BigInteger id;
     private String username;
-    List<Stock> stocks;
+    private List<Stock> stocks;
     private double totalInvested;
     private double currentValue;
     private double profit;

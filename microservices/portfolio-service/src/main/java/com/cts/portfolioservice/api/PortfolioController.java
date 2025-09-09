@@ -26,6 +26,11 @@ public class PortfolioController {
         return portfolioService.createPortfolio(portfolio);
     }
 
+    @PutMapping("/api/v1/{stockName}")
+    public Portfolio addStock(@PathVariable String stockName){
+        return portfolioService.addStockToPortfolio(stockName,1);
+    }
+
     // api to fetch individual stocks in the portfolio
 
 }
