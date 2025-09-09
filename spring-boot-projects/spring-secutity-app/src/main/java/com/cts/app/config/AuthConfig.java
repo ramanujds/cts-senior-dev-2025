@@ -4,6 +4,7 @@ import com.cts.app.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class AuthConfig {
     private final JwtAuthFilter jwtAuthFilter;
 
@@ -47,7 +49,7 @@ public class AuthConfig {
         return http.authorizeHttpRequests(
                         request -> request.requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers("/public/**", "/auth/**").permitAll()
+                                .requestMatchers("/**").permitAll()
                 )
                 .csrf(c -> c.disable())
 //                .formLogin(Customizer.withDefaults())
