@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      username: admin
+      password: password
+      host: localhost
+      database: stocks_db
+      port: 27017
+server:
+  port: 8100
+
