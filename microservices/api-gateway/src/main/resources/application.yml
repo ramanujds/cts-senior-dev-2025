@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: stock-service
+              uri: lb://stock-service
+              predicates:
+                - Path=/stocks/**
+            - id: portfolio-service
+              uri: lb://portfolio-service
+              predicates:
+                - Path=/portfolio/**
