@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Service
 public class PortfolioService {
@@ -24,7 +27,30 @@ public class PortfolioService {
 
 
     public Portfolio retrievePortfolio(String username) {
-        return portfolioRepo.findByUsername(username);
+        Portfolio portfolio = portfolioRepo.findByUsername(username);
+        log.info(portfolio.toString());
+        List<Stock> stocksInPortfolio = portfolio.getStocks();
+        double totalInvested = stocksInPortfolio.stream().mapToDouble(stock -> stock.getBuyingPrice() * stock.getQuantity()).sum();
+        portfolio.setTotalInvested(totalInvested);
+
+
+       var currentStockWithPrices = restTemplate.postForObject("http://localhost:8100/stocks/api/v1/bulk",stocksInPortfolio,StockDto[].class);
+
+       double currentValue = 0.0;
+         if(currentStockWithPrices != null){
+                for(Stock stock : stocksInPortfolio){
+                    for(StockDto stockDto : currentStockWithPrices){
+                        if(stock.getName().equalsIgnoreCase(stockDto.name())){
+                            currentValue += stockDto.price() * stock.getQuantity();
+                        }
+                    }
+                }
+         }
+        portfolio.setCurrentValue(currentValue);
+        portfolio.setProfit(currentValue - totalInvested);
+        return portfolio;
+
+
     }
 
     public Portfolio addStockToPortfolio(String name, int quantity, String username) {
