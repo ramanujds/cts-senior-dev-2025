@@ -1,5 +1,6 @@
 package com.cts.portfolioservice.service;
 
+import com.cts.portfolioservice.client.StockServiceFeignClient;
 import com.cts.portfolioservice.dto.StockDto;
 import com.cts.portfolioservice.model.Portfolio;
 import com.cts.portfolioservice.model.Stock;
@@ -15,14 +16,18 @@ import java.util.List;
 @Service
 public class PortfolioService {
 
+    private final StockServiceFeignClient stockServiceFeignClient;
+    private String baseUrl = "http://STOCK-SERVICE/stocks/api/v1";
+
 
 
     private final PortfolioRepository portfolioRepo;
     private final RestTemplate restTemplate;
 
-    public PortfolioService(PortfolioRepository portfolioRepo, RestTemplate restTemplate) {
+    public PortfolioService(PortfolioRepository portfolioRepo, RestTemplate restTemplate, StockServiceFeignClient stockServiceFeignClient) {
         this.portfolioRepo = portfolioRepo;
         this.restTemplate = restTemplate;
+        this.stockServiceFeignClient = stockServiceFeignClient;
     }
 
 
@@ -34,7 +39,7 @@ public class PortfolioService {
         portfolio.setTotalInvested(totalInvested);
 
 
-       var currentStockWithPrices = restTemplate.postForObject("http://localhost:8100/stocks/api/v1/bulk",stocksInPortfolio,StockDto[].class);
+       var currentStockWithPrices = stockServiceFeignClient.fetchStocksWithCurrentPrices(stocksInPortfolio);
 
        double currentValue = 0.0;
          if(currentStockWithPrices != null){
@@ -56,7 +61,7 @@ public class PortfolioService {
     public Portfolio addStockToPortfolio(String name, int quantity, String username) {
         // Fetch stocks from  stock service
 
-        StockDto stock = restTemplate.getForObject("http://localhost:8100/stocks/api/v1/"+name,StockDto.class);
+        StockDto stock = restTemplate.getForObject(baseUrl+"/"+name,StockDto.class);
         Portfolio portfolio = portfolioRepo.findByUsername(username);
         log.info(portfolio.toString());
         Stock newStock = new Stock();
