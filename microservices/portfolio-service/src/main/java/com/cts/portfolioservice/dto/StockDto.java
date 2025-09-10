@@ -1,4 +1,4 @@
 package com.cts.portfolioservice.dto;
 
-public record StockDto(String name, String price) {
+public record StockDto(String name, double price) {
 }

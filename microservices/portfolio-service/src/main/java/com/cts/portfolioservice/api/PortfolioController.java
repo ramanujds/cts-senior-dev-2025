@@ -1,5 +1,6 @@
 package com.cts.portfolioservice.api;
 
+import com.cts.portfolioservice.dto.PortfolioStockRequestDto;
 import com.cts.portfolioservice.model.Portfolio;
 import com.cts.portfolioservice.service.PortfolioService;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,9 @@ public class PortfolioController {
         return portfolioService.createPortfolio(portfolio);
     }
 
-    @PutMapping("/api/v1/{stockName}")
-    public Portfolio addStock(@PathVariable String stockName){
-        return portfolioService.addStockToPortfolio(stockName,1);
+    @PutMapping("/api/v1")
+    public Portfolio addStock(@RequestBody PortfolioStockRequestDto dto){
+        return portfolioService.addStockToPortfolio(dto.stockName(),dto.quantity(),dto.username());
     }
 
     // api to fetch individual stocks in the portfolio
