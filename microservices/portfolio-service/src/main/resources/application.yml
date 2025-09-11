@@ -9,3 +9,28 @@ spring:
 server:
   port: 8200
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      stock-service:
+        register-health-indicator: true
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 1
+        automatic-transition-from-open-to-half-open-enabled: true
+        sliding-window-type: count_based
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+  tracing:
+    sampling:
+      probability: 1.0

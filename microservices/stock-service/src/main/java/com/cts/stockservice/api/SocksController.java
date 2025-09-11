@@ -38,6 +38,14 @@ public class SocksController {
 
     @PostMapping("/api/v1/bulk")
     public List<StockResponseDto> fetchBulkStocks(@RequestBody List<StockNameRequestDto> stockNames) {
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        if(!stockNames.isEmpty()){
+//            throw new RuntimeException();
+//        }
         return stocksRepository.findByNameInIgnoreCase(
                 stockNames.stream().map(StockNameRequestDto::name).toList()
         ).stream().map(stock -> new StockResponseDto(stock.getName(), stock.getPrice())).toList();
