@@ -5,6 +5,8 @@ import com.cts.portfolioservice.dto.StockDto;
 import com.cts.portfolioservice.model.Portfolio;
 import com.cts.portfolioservice.model.Stock;
 import com.cts.portfolioservice.repository.PortfolioRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,6 +33,7 @@ public class PortfolioService {
     }
 
 
+    @Retry(name = "stock-service")
     public Portfolio retrievePortfolio(String username) {
         Portfolio portfolio = portfolioRepo.findByUsername(username);
         log.info(portfolio.toString());
@@ -39,7 +42,7 @@ public class PortfolioService {
         portfolio.setTotalInvested(totalInvested);
 
 
-       var currentStockWithPrices = stockServiceFeignClient.fetchStocksWithCurrentPrices(stocksInPortfolio);
+       var currentStockWithPrices = fetchStockPricesInBulk(stocksInPortfolio);
 
        double currentValue = 0.0;
          if(currentStockWithPrices != null){
@@ -57,6 +60,14 @@ public class PortfolioService {
 
 
     }
+
+
+    private List<StockDto> fetchStockPricesInBulk(List<Stock> stocks){
+        return stockServiceFeignClient.fetchStocksWithCurrentPrices(stocks);
+    }
+
+
+
 
     public Portfolio addStockToPortfolio(String name, int quantity, String username) {
         // Fetch stocks from  stock service

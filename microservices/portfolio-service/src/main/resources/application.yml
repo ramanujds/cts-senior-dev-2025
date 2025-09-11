@@ -10,7 +10,14 @@ server:
   port: 8200
 
 resilience4j:
+  retry:
+    instances:
+      stock-service:
+        max-attempts: 3
+        wait-duration: 1s
+    retry-aspect-order: 2
   circuitbreaker:
+    circuit-breaker-aspect-order: 1
     instances:
       stock-service:
         register-health-indicator: true
@@ -22,6 +29,22 @@ resilience4j:
         automatic-transition-from-open-to-half-open-enabled: true
         sliding-window-type: count_based
 
+  ratelimiter:
+    instances:
+       stock-service:
+        limit-for-period: 10
+        limit-refresh-period: 60s
+        timeout-duration: 0
+        register-health-indicator: true
+
+  bulkhead:
+    instances:
+      stock-service:
+        max-concurrent-calls: 5
+        max-wait-duration: 100ms
+
+
+
 management:
   endpoints:
     web:
@@ -30,6 +53,7 @@ management:
   endpoint:
     health:
       show-details: always
+
 
   tracing:
     sampling:
