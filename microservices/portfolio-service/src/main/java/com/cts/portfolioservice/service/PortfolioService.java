@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -91,7 +92,12 @@ public class PortfolioService {
         log.info(stock.toString());
         portfolio.getStocks().add(newStock);
         var upadtedPortfolio = portfolioRepo.save(portfolio);
-        kafkaTemplate.send(topic,newStock.toString()).thenAccept(m->log.info("User Notified"));
+        try {
+            kafkaTemplate.send(topic,newStock.toString());
+        } catch (Exception e) {
+            log.error("Error sending message to Kafka: {}", e.getMessage());
+        }
+
         return upadtedPortfolio;
 
     }

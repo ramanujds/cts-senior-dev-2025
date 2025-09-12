@@ -1,7 +1,17 @@
 kafka:
   topic: order-events
 
+server:
+  port: 8200
+
 spring:
+  kafka:
+    bootstrap-servers: localhost:30092
+    producer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+
   data:
     mongodb:
       username: admin
@@ -9,14 +19,7 @@ spring:
       host: localhost
       database: portfolio_db
       port: 27017
-server:
-  port: 8200
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 resilience4j:
   retry:

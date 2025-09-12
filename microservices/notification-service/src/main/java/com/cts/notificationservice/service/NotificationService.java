@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
 
 
-    @KafkaListener(topics = "order-events", groupId = "order-notification-group")
+    @KafkaListener(topics = "order-events", groupId = "my-order-group")
     public void sendNotification(ConsumerRecord<String,String> record){
         log.info("New Message Received {}",record.value());
         // any task you can perform
