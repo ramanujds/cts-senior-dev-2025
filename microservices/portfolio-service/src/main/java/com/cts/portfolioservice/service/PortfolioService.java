@@ -8,6 +8,9 @@ import com.cts.portfolioservice.repository.PortfolioRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,8 +20,11 @@ import java.util.List;
 @Slf4j
 @Service
 public class PortfolioService {
+    @Value("${kafka.topic}")
+    private String topic;
 
     private final StockServiceFeignClient stockServiceFeignClient;
+    private final KafkaTemplate<String,String> kafkaTemplate;
     private String baseUrl = "http://STOCK-SERVICE/stocks/api/v1";
 
 
@@ -26,10 +32,13 @@ public class PortfolioService {
     private final PortfolioRepository portfolioRepo;
     private final RestTemplate restTemplate;
 
-    public PortfolioService(PortfolioRepository portfolioRepo, RestTemplate restTemplate, StockServiceFeignClient stockServiceFeignClient) {
+
+
+    public PortfolioService(PortfolioRepository portfolioRepo, RestTemplate restTemplate, StockServiceFeignClient stockServiceFeignClient, KafkaTemplate<String,String> kafkaTemplate) {
         this.portfolioRepo = portfolioRepo;
         this.restTemplate = restTemplate;
         this.stockServiceFeignClient = stockServiceFeignClient;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
 
@@ -81,7 +90,9 @@ public class PortfolioService {
         newStock.setBuyingPrice(stock.price());
         log.info(stock.toString());
         portfolio.getStocks().add(newStock);
-        return portfolioRepo.save(portfolio);
+        var upadtedPortfolio = portfolioRepo.save(portfolio);
+        kafkaTemplate.send(topic,newStock.toString()).thenAccept(m->log.info("User Notified"));
+        return upadtedPortfolio;
 
     }
 

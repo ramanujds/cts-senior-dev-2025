@@ -1,3 +1,6 @@
+kafka:
+  topic: order-events
+
 spring:
   data:
     mongodb:
@@ -8,6 +11,12 @@ spring:
       port: 27017
 server:
   port: 8200
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 resilience4j:
   retry:
