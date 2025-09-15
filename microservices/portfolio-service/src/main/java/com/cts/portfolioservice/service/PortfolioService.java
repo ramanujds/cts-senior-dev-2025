@@ -92,11 +92,11 @@ public class PortfolioService {
         log.info(stock.toString());
         portfolio.getStocks().add(newStock);
         var upadtedPortfolio = portfolioRepo.save(portfolio);
-        try {
-            kafkaTemplate.send(topic,newStock.toString());
-        } catch (Exception e) {
-            log.error("Error sending message to Kafka: {}", e.getMessage());
-        }
+//        try {
+//            kafkaTemplate.send(topic,newStock.toString());
+//        } catch (Exception e) {
+//            log.error("Error sending message to Kafka: {}", e.getMessage());
+//        }
 
         return upadtedPortfolio;
 

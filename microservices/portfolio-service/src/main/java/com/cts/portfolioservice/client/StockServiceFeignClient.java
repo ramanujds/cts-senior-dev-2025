@@ -1,5 +1,6 @@
 package com.cts.portfolioservice.client;
 
+import com.cts.portfolioservice.config.FeignConfigWithInterceptor;
 import com.cts.portfolioservice.dto.StockDto;
 import com.cts.portfolioservice.model.Stock;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "stock-service")
+@FeignClient(name = "stock-service",configuration = FeignConfigWithInterceptor.class)
 public interface StockServiceFeignClient {
 
     Logger log = LoggerFactory.getLogger(StockServiceFeignClient.class);

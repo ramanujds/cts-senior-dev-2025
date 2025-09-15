@@ -1,5 +1,8 @@
 kafka:
   topic: order-events
+auth:
+  jwtSecret: fsyfashvagsuygsqagjhabsmbqw231t67512736teuqbk32t3781
+  jwtExpirationMs: 300
 
 server:
   port: 8200

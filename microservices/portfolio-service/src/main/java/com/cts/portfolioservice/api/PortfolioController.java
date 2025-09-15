@@ -22,6 +22,8 @@ public class PortfolioController {
         return portfolioService.retrievePortfolio(username);
     }
 
+
+
     @PostMapping("/api/v1")
     public Portfolio createPortfolio(@RequestBody Portfolio portfolio){
         return portfolioService.createPortfolio(portfolio);
