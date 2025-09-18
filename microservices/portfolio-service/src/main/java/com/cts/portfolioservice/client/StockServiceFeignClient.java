@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "stock-service",configuration = FeignConfigWithInterceptor.class)
+@FeignClient(value = "stocks-service", url = "http://stocks-service/stocks/api/v1",configuration = FeignConfigWithInterceptor.class)
 public interface StockServiceFeignClient {
 
     Logger log = LoggerFactory.getLogger(StockServiceFeignClient.class);
 
-    @PostMapping("/stocks/api/v1/bulk")
+    @PostMapping("/bulk")
     @CircuitBreaker(name = "stock-service", fallbackMethod = "fetchStocksWithCurrentPricesFallback")
     @RateLimiter(name = "stock-service", fallbackMethod = "fetchStocksWithCurrentPricesRateLimiterFallback")
     @Retry(name = "stock-service")

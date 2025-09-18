@@ -7,9 +7,9 @@ spring:
         hibernate:
           format_sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/auth_db
-    username: root
-    password: password
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:user_db}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:password}
 
 auth:
     jwtSecret: fsyfashvagsuygsqagjhabsmbqw231t67512736teuqbk32t3781

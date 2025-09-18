@@ -1,13 +1,9 @@
 spring:
   data:
     mongodb:
-      username: admin
-      password: password
-      host: localhost
-      database: stocks_db
-      port: 27017
+      uri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:admin}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:stocks_db}?authSource=admin
 server:
-  port: 8100
+  port: 8080
 
 #logging:
 #  config: classpath:logback-spring.xml

@@ -26,7 +26,7 @@ public class PortfolioService {
 
     private final StockServiceFeignClient stockServiceFeignClient;
     private final KafkaTemplate<String,String> kafkaTemplate;
-    private String baseUrl = "http://STOCK-SERVICE/stocks/api/v1";
+    private String baseUrl = "http://stocks-service/stocks/api/v1";
 
 
 

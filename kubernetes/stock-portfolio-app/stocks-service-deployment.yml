@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stocks-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stocks-service
+  template:
+    metadata:
+      labels:
+        app: stocks-service
+    spec:
+      containers:
+        - name: stocks-service
+          image: ram1uj/stocks-service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_USER
+              value: "root"
+            - name: MONGO_PASSWORD
+              value: "password"
+            - name: MONGO_HOST
+              value: "mongodb"
+            - name: MONGO_DATABASE
+              value: "stocks_db"
+            - name: MONGO_PORT
+              value: "27017"
+          imagePullPolicy: Always
