@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongodb
 spec:
@@ -24,3 +24,22 @@ spec:
               value: "password"
             - name: MONGO_INITDB_DATABASE
               value: "stocks_db"
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+          resources:
+                requests:
+                    memory: "256Mi"
+                    cpu: "250m"
+                limits:
+                    memory: "512Mi"
+                    cpu: "500m"
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+  serviceName: "mongodb"
