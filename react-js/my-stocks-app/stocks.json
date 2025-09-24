@@ -1,19 +1,58 @@
 {
-    "stocks": [
-        { "id": 1, "name": "Apple", "price": 150, "companyName": "Apple Inc." },
-        { "id": 2, "name": "Google", "price": 2800, "companyName": "Alphabet Inc." },
-        { "id": 3, "name": "Microsoft", "price": 300, "companyName": "Microsoft Corporation" },
-        { "id": 4, "name": "Amazon", "price": 3500, "companyName": "Amazon.com, Inc." },
-        { "id": 5, "name": "Facebook", "price": 370, "companyName": "Meta Platforms, Inc." },
-        { "id": 6, "name": "Tesla", "price": 700, "companyName": "Tesla, Inc." },
-        { "id": 7, "name": "Netflix", "price": 590, "companyName": "Netflix, Inc." },
-        { "id": 8, "name": "NVIDIA", "price": 220, "companyName": "NVIDIA Corporation" },
-        { "id": 9, "name": "Adobe", "price": 650, "companyName": "Adobe Inc." },
-        { "id": 10, "name": "Intel", "price": 55, "companyName": "Intel Corporation" },
-        { "id": 11, "name": "IBM", "price": 140, "companyName": "International Business Machines Corporation" },
-        { "id": 12, "name": "Salesforce", "price": 250, "companyName": "Salesforce.com, Inc." },
-        { "id": 13, "name": "PayPal", "price": 190, "companyName": "PayPal Holdings, Inc." },
-        { "id": 14, "name": "Shopify", "price": 1450, "companyName": "Shopify Inc." },
-        { "id": 15, "name": "Uber", "price": 45, "companyName": "Uber Technologies, Inc."}
-    ]
+  "stocks": [
+    {
+      "id": "3",
+      "name": "Microsoft",
+      "price": 300,
+      "companyName": "Microsoft Corporation"
+    },
+    {
+      "id": "4",
+      "name": "Amazon",
+      "price": 3500,
+      "companyName": "Amazon.com, Inc."
+    },
+    {
+      "id": "5",
+      "name": "Facebook",
+      "price": 370,
+      "companyName": "Meta Platforms, Inc."
+    },
+    {
+      "id": "6",
+      "name": "Tesla",
+      "price": 700,
+      "companyName": "Tesla, Inc."
+    },
+    {
+      "id": "7",
+      "name": "Netflix",
+      "price": 590,
+      "companyName": "Netflix, Inc."
+    },
+    {
+      "id": "8",
+      "name": "NVIDIA",
+      "price": 220,
+      "companyName": "NVIDIA Corporation"
+    },
+    {
+      "id": "9",
+      "name": "Adobe",
+      "price": 650,
+      "companyName": "Adobe Inc."
+    },
+    {
+      "id": "10",
+      "name": "Intel",
+      "price": 55,
+      "companyName": "Intel Corporation"
+    },
+    {
+      "id": "11",
+      "name": "IBM",
+      "price": 140,
+      "companyName": "International Business Machines Corporation"
+    }
+  ]
 }
