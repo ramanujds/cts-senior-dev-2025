@@ -5,14 +5,20 @@ import './App.css'
 import Header from './pages/Header'
 import MainPage from './pages/MainPage'
 import Footer from './pages/Footer'
+import { Col, Row } from 'react-bootstrap'
 
 export function App() {
 
   return (
     <>
+    
      <Header />
-     <MainPage />
+     <main>
+      <MainPage />
+     </main>
+    
      <Footer />
+    
     </>
   )
 }

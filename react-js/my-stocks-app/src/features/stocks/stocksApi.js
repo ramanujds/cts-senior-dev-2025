@@ -23,3 +23,23 @@ export const deleteStockById = async (id) => {
     });
 };
 
+export const addStock = async (stock) => {
+    return fetch('http://localhost:3000/stocks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(stock),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error adding stock:', error);
+        throw error;
+    });
+};
+

@@ -1,7 +1,9 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import StockItem from './StockItem'
-import { deleteStockById, fetchStocks } from './stocksApi';
+import { addStock, deleteStockById, fetchStocks } from './stocksApi';
+
+export const StockContext = createContext();
 
 const StockList = () => {
 
@@ -12,6 +14,8 @@ const StockList = () => {
         loading: false,
         error: null,
     };
+
+ 
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -36,10 +40,25 @@ const StockList = () => {
                     error: action.payload,
                 };
             case 'DELETE':
+                deleteStockById(action.payload);
                 return {
                     ...state,
                     stocks: state.stocks.filter(stock => stock.id !== action.payload),
                 };
+            case 'ADD':
+                addStock(action.payload);
+                return {
+                    ...state,
+                    stocks: [...state.stocks, action.payload],
+                };
+            case 'UPDATE':
+                return {
+                    ...state,
+                    stocks: state.stocks.map(stock => 
+                        stock.id === action.payload.id ? action.payload : stock
+                    ),
+                };
+
             default:
                 return state;
         }
@@ -59,26 +78,19 @@ const StockList = () => {
         });
     }
 
-    function deleteStock(id) {
-      if(confirm("Are you sure you want to delete this stock?")){
-        deleteStockById(id).then(() => {
-            dispatch({ type: 'DELETE', payload: id });
-        })
-        .catch(error => {
-            dispatch({ type: 'ERROR', payload: error });
-            console.error('Error deleting stock:', error);
-        });
-      }
-  }
+
 
   return (
-    <>
+    <StockContext.Provider value={{ state, dispatch }}>
     <Row>
+        {state.loading && <p>Loading...</p>}
+        {state.error && <p className="text-danger">Error: {state.error.message}</p>}
+        {!state.loading && state.stocks.length === 0 && <p>No stocks available.</p>}
         {state.stocks.map(stock => (
-            <StockItem key={stock.id} stock={stock} deleteStock={deleteStock}/>
+            <StockItem key={stock.id} stock={stock}/>
         ))}
     </Row>
-    </>
+    </StockContext.Provider>
   )
 }
 

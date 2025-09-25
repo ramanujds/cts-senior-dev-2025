@@ -35,24 +35,6 @@
       "name": "NVIDIA",
       "price": 220,
       "companyName": "NVIDIA Corporation"
-    },
-    {
-      "id": "9",
-      "name": "Adobe",
-      "price": 650,
-      "companyName": "Adobe Inc."
-    },
-    {
-      "id": "10",
-      "name": "Intel",
-      "price": 55,
-      "companyName": "Intel Corporation"
-    },
-    {
-      "id": "11",
-      "name": "IBM",
-      "price": 140,
-      "companyName": "International Business Machines Corporation"
     }
   ]
 }
