@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Button, Card, Col, Container } from 'react-bootstrap'
-import { StockContext } from './StockList';
+import { StockContext } from '../../pages/MainPage';
+
 
 const StockItem = ({stock}) => {
   const dispatch = useContext(StockContext).dispatch;
