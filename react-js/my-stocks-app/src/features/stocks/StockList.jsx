@@ -2,14 +2,19 @@ import React, { createContext, useContext, useEffect, useReducer, useState } fro
 import { Row } from 'react-bootstrap'
 import StockItem from './StockItem'
 import { addStock, deleteStockById, fetchStocks } from './stocksApi';
-import { StockContext } from '../../pages/MainPage';
+import { StockContext } from '../../App'
+import { Outlet } from 'react-router';
 
 
 
 
 const StockList = () => {
 
+
+    
     const {state, dispatch} = useContext(StockContext);
+    const context = useContext(StockContext);
+    console.log('Context in StockList:', context);
 
     // const [stocks, setStocks] = useState([]);
 
@@ -45,6 +50,7 @@ const StockList = () => {
         {state.stocks.map(stock => (
             <StockItem key={stock.id} stock={stock}/>
         ))}
+        <Outlet />  
     </Row>
     )
 }

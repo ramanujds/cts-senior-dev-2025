@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { StockContext } from '../../pages/MainPage';
+import { StockContext } from '../../App'
 import { useForm } from 'react-hook-form';
 
 const StockReactHookFormBased = () => {
