@@ -3,13 +3,13 @@
     {
       "id": "4",
       "name": "Amazon",
-      "price": 3500,
+      "price": "4000",
       "companyName": "Amazon.com, Inc."
     },
     {
       "id": "5",
       "name": "Facebook",
-      "price": 370,
+      "price": "400",
       "companyName": "Meta Platforms, Inc."
     },
     {

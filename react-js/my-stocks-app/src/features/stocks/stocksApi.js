@@ -43,3 +43,37 @@ export const addStock = async (stock) => {
     });
 };
 
+export const updateStock = async (id, stock) => {
+    return fetch(`http://localhost:3000/stocks/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(stock),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error updating stock:', error);
+        throw error;
+    });
+};
+
+export const fetchStockById = async (id) => {
+    return fetch(`http://localhost:3000/stocks/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('Error fetching stock by ID:', error);
+            throw error;
+        });
+};  
+

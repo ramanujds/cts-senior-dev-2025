@@ -14,12 +14,12 @@ const appRoutes =createBrowserRouter([
     element: <App />,
     children: [
       { path: '/', element: <StockList /> ,
-        // children: [
-        //     {path: '/update/:id', element: <UpdateStock /> }  
-        // ]
+        children: [
+            {path: '/update/:id', element: <UpdateStock /> }  
+        ]
 
       },
-      {path: '/update/:id', element: <UpdateStock /> } ,
+      // {path: '/update/:id', element: <UpdateStock /> } ,
       { path: '/add-stock', element: <StockForm /> }
     ]
   }

@@ -9,7 +9,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import StockList from './features/stocks/StockList'
 import StockForm from './features/stocks/StockForm'
 import React from 'react'
-import { deleteStockById, addStock } from './features/stocks/stocksApi'
+import { deleteStockById, addStock, updateStock } from './features/stocks/stocksApi'
 
 
 export const StockContext = createContext();
@@ -57,6 +57,7 @@ export function App() {
           stocks: [...state.stocks, action.payload],
         };
       case 'UPDATE':
+        updateStock(action.payload.id, action.payload);
         return {
           ...state,
           stocks: state.stocks.map(stock =>
