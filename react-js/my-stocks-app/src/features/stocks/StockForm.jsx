@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { StockContext } from '../../App'
+import { useDispatch } from 'react-redux';
+import { saveStock } from './stocksApi';
 
 
 
 
 const StockForm = () => {
 
-  const dispatch = useContext(StockContext).dispatch;
+  const dispatch = useDispatch();
   const [stockForm,setForm]=useState({name:"",companyName:"",price:0})
   const [errors, setErrors] = useState({});
 
@@ -27,7 +28,7 @@ const StockForm = () => {
     const validationErrors = validate();
     setErrors(validationErrors)
     if(Object.keys(validationErrors).length === 0){
-      dispatch({type: 'ADD', payload: stockForm})
+      saveStock(stockForm);
       alert('Stock added successfully')
       setForm({name:"",companyName:"",price:0})
     }

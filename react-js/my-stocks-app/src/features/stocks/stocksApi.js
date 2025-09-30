@@ -23,7 +23,7 @@ export const deleteStockById = async (id) => {
     });
 };
 
-export const addStock = async (stock) => {
+export const saveStock = async (stock) => {
     return fetch('http://localhost:3000/stocks', {
         method: 'POST',
         headers: {

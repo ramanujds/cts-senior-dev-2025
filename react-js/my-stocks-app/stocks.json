@@ -29,6 +29,12 @@
       "name": "NVIDIA",
       "price": 220,
       "companyName": "NVIDIA Corporation"
+    },
+    {
+      "id": "8694",
+      "name": "TATASTEEL",
+      "companyName": "Tata Steel Ltd",
+      "price": "100"
     }
   ]
 }

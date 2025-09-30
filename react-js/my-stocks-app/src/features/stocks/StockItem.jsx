@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React, { use } from 'react'
 import { Button, Card, Col, Container } from 'react-bootstrap'
-import { StockContext } from '../../App'
 import { useNavigate } from 'react-router';
 
+import { useDispatch } from 'react-redux';
 
 const StockItem = ({stock}) => {
-  const dispatch = useContext(StockContext).dispatch;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleUpdate(id) {
