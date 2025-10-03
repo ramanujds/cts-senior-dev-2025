@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @Slf4j
 @RequestMapping("/auth")
+@CrossOrigin(origins = {"http://localhost:5173"})
 public class AuthController {
 
     private final PasswordEncoder passwordEncoder;

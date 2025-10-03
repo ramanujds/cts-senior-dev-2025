@@ -51,6 +51,7 @@ public class AuthConfig {
                                 .requestMatchers("/users/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/**").permitAll()
                 )
+                .cors(Customizer.withDefaults())
                 .csrf(c -> c.disable())
 //                .formLogin(Customizer.withDefaults())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

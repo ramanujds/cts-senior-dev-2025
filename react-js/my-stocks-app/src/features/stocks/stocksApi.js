@@ -1,11 +1,22 @@
+import { getToken } from "../authentication/tokenManager";
+
+
+
+
 export const fetchStocks = async () => {
-    return fetch('http://localhost:3000/stocks')
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Error fetching stocks:', error);
-            throw error;
-        });
-};
+    const token = getToken(); 
+    const headers = {
+    Authorization: token ? `Bearer ${token}` : '',
+    'Content-Type': 'application/json',
+  };
+  const response = await fetch("http://localhost:8100/stocks/api/v1", { headers });
+  if (response.status === 401) {
+    console.error("Unauthorized!!");
+
+  }
+  return response.json();
+
+}
 
 export const deleteStockById = async (id) => {
     return fetch(`http://localhost:3000/stocks/${id}`, {

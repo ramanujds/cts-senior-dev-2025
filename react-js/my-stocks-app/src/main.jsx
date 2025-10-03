@@ -9,6 +9,7 @@ import StockForm from './features/stocks/StockForm.jsx';
 import UpdateStock from './features/stocks/UpdateStock.jsx';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
+import Login from "./features/authentication/Login.jsx";
 
 const appRoutes = createBrowserRouter([
   {
@@ -23,7 +24,8 @@ const appRoutes = createBrowserRouter([
 
       },
       // {path: '/update/:id', element: <UpdateStock /> } ,
-      { path: '/add-stock', element: <StockForm /> }
+      { path: '/add-stock', element: <StockForm /> },
+        {path: '/login', element: <Login/>}
     ]
   }
 ]);
