@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easy-recipes-deployment
+  labels:
+    app: easy-recipes
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: easy-recipes
+    template:
+        metadata:
+            labels:
+                app: easy-recipes
+        spec:
+            containers:
+                - name: easy-recipes
+                  image: ram1uj/easy-recipes:latest
+                  ports:
+                        - containerPort: 8080
+
+            resources:
+                requests:
+                    memory: "256Mi"
+                    cpu: "250m"
+                limits:
+                    memory: "512Mi"
+                    cpu: "500m"
+
